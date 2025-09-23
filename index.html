@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <title>awtekno.com - Perkongsian Teknologi</title>
+    <!-- Load head.html content directly -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.ico">
+    <!-- Include other meta tags after loading head.html -->
+    <div id="head-placeholder"></div>
+</head>
+<body>
+    <div id="header"></div>
+    <div id="nav"></div>
+
+    <main class="container py-5">
+        <!-- SEO H1 - Hidden but valuable for search engines -->
+        <h1 class="visually-hidden">Perkongsian berkaitan teknologi</h1>
+        
+        <!-- Search & Filter Section -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" id="search-input" class="form-control" placeholder="Cari post..." aria-label="Cari post">
+                    <button class="btn btn-outline-secondary" type="button" onclick="searchPosts()">
+                        🔍 Cari
+                    </button>
+                    <button class="btn btn-outline-warning" type="button" onclick="clearSearch()">
+                        ✨ Bersih
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <select id="category-filter" class="form-select" onchange="searchPosts()">
+                    <option value="">Semua Kategori</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Results Count -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <small id="results-count" class="text-muted"></small>
+            </div>
+        </div>
+
+        <!-- Posts Grid -->
+        <div id="posts-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4"></div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="mb-4"></div>
+    </main>
+
+    <!-- Modal for full post -->
+    <div class="modal fade" id="post-modal" tabindex="-1" aria-labelledby="post-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" id="post-modal-label"></h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="post-content"></div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+    <div id="analytics-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/shared.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Initialize everything
+        async function initializeBlog() {
+            try {
+                console.log('Starting initialization...');
+                
+                await loadPartials();
+                
+                if (typeof loadHead === 'function') loadHead();
+                if (typeof loadAnalytics === 'function') loadAnalytics();
+                
+                await loadPosts();
+                
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            searchPosts();
+                        }
+                    });
+                }
+                
+                console.log('Initialization complete!');
+                
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeBlog);
+        } else {
+            initializeBlog();
+        }
+    </script>
+</body>
+</html>

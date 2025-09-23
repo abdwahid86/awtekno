@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Borang.my",
+    "description": "Platform borang online Malaysia dengan ciri lengkap untuk perniagaan dan kegunaan peribadi. Mudah untuk digunakan. Sesuai untuk tinjauan, pendaftaran acara, borang pesanan, dan banyak lagi.",
+    "link": "https://borang.my",
+    "category": "SAAS",
+    "tags": ["forms", "business", "malaysia", "productivity"]
+  },
+  {
+    "name": "Infratify",
+    "description": "Infratify adalah platform pembelajaran dalam talian yang menyediakan kursus IT digital berkualiti tinggi dalam pelbagai bidang seperti cloud computing, DevOps, server management, dan networking.",
+    "link": "https://www.infratify.com",
+    "category": "DevOps", 
+    "tags": ["cloud", "infrastructure", "devops", "automation"]
+  },
+  {
+    "name": "Traits - Baiki laptop",
+    "description": "Bertempat di Taman Melawati. Menawarkan servis baiki laptop.",
+    "link": "https://laptoprepairnearme.my/traits/",
+    "category": "Services",
+    "tags": ["repair", "laptop", "malaysia", "directory"]
+  },
+  {
+    "name": "thedate.my",
+    "description": "Track bookings, view your calendar, and send automated WhatsApp reminders — all in one dashboard made for small business.",
+    "link": "https://www.thedate.my",
+    "category": "Services",
+    "tags": ["booking"]
+  }
+]

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <title>Komuniti - awtekno.com</title>
+    <!-- Load head.html content directly -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.ico">
+    <!-- Include other meta tags after loading head.html -->
+    <div id="head-placeholder"></div>
+</head>
+<body>
+    <div id="header"></div>
+    <div id="nav"></div>
+
+    <main class="container py-5">
+        <!-- SEO H1 -->
+        <h1 class="visually-hidden">Komuniti dan Platform Teknologi Malaysia</h1>
+        
+        <div class="text-center mb-4">
+            <h2 class="display-5 fw-bold text-gradient">Komuniti</h2>
+        </div>
+        
+        <!-- Description -->
+        <div class="alert alert-info mb-4" role="alert">
+            <strong>🤝 Koleksi blog, tools, dan platform yang saya sokong.
+        </div>
+
+        <!-- Search Section -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" id="resource-search-input" class="form-control" placeholder="Cari platform..." aria-label="Cari platform">
+                    <button class="btn btn-outline-secondary" type="button" onclick="searchResourceItems()">
+                        🔍 Cari
+                    </button>
+                    <button class="btn btn-outline-warning" type="button" onclick="clearResourceSearch()">
+                        ✨ Bersih
+                    </button>
+                </div>
+            </div>
+            <div class="col-md-4 d-flex align-items-center">
+                <small id="resource-results-count" class="text-muted"></small>
+            </div>
+        </div>
+
+        <!-- Platform Grid -->
+        <div id="resources-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4"></div>
+
+        <!-- Pagination -->
+        <div id="resource-pagination" class="mb-4"></div>
+    </main>
+
+    <div id="footer"></div>
+    <div id="analytics-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/shared.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Initialize komuniti page
+        async function initializeKomuniti() {
+            try {
+                await loadPartials();
+                
+                if (typeof loadHead === 'function') loadHead();
+                if (typeof loadAnalytics === 'function') loadAnalytics();
+                
+                await loadResources();
+                
+                // Add Enter key support untuk search
+                const searchInput = document.getElementById('resource-search-input');
+                if (searchInput) {
+                    searchInput.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            searchResourceItems();
+                        }
+                    });
+                }
+                
+                console.log('Komuniti page initialized');
+            } catch (error) {
+                console.error('Error initializing komuniti page:', error);
+            }
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeKomuniti);
+        } else {
+            initializeKomuniti();
+        }
+    </script>
+</body>
+</html>

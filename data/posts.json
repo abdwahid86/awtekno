@@ -1,0 +1,24 @@
+[
+  {
+    "title": "Pemindahan Fail Antara Peranti Windows Menggunakan WSL dan Rsync",
+    "slug": "pindah-file-antara-peranti-windows-menggunakan-wsl-dan-rsync",
+    "date": "2025-09-23",
+    "categories": ["Windows", "WSL"],
+    "tags": ["pindah file", "rsync"],
+    "excerpt": "Memindahkan fail antara peranti windows",
+    "file": "data/posts/2025-09-23_2.md",
+    "format": "markdown"
+  },
+  {
+    "title": "Uji TLS/SSL pada Server Dalaman (F5 / HAProxy / Nginx + Apache)",
+    "slug": "uji-tls-ssl-server-dalaman",
+    "date": "2025-09-23",
+    "categories": ["Security", "SSL", "Server"],
+    "tags": ["TLS","SSL","nmap","F5","HAProxy","nginx","apache","pentest"],
+    "excerpt": "Panduan ringkas untuk menguji sokongan protokol TLS/SSL pada server yang hanya boleh dicapai dari rangkaian dalaman, termasuk arahan nmap dan langkah pemeriksaan.",
+    "file": "data/posts/2025-09-23_1.md",
+    "format": "markdown"
+  }
+
+
+]
