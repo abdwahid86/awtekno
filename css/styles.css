@@ -180,9 +180,18 @@ small.text-muted {
 }
 
 /* Modal styles */
+.modal {
+  z-index: 1055; /* Bootstrap default, above navbar */
+}
+
+.modal-backdrop {
+  z-index: 1050; /* Bootstrap default */
+}
+
 .modal-content {
   background-color: var(--card);
   border: 1px solid var(--border);
+  z-index: 1056; /* ensure modal content is topmost */
 }
 
 .modal-header, .modal-footer {
@@ -205,15 +214,15 @@ small.text-muted {
   border-bottom: 1px solid var(--border);
   padding: 0.75rem 0;
   position: relative;
-  z-index: 1300; /* ensure navbar sits above main content */
+  z-index: 1030; /* lowered to be below modal (Bootstrap modal is 1055) */
 }
 
 .theme-dark .navbar {
   background-color: var(--dark-bg) !important;
 }
 
-/* Responsive navbar fixes */
-@media (max-width: 767px) {
+/* Combined responsive navbar for all mobile/tablet screens */
+@media (max-width: 991px) {
   .navbar {
     padding: 0.5rem 0;
   }
@@ -226,7 +235,7 @@ small.text-muted {
     right: 0;
     padding: 0.5rem;
     border-bottom: 1px solid var(--border);
-    z-index: 1000;
+    z-index: 1025; /* below modal but above main content */
   }
 
   .theme-dark .navbar-collapse {
@@ -290,46 +299,80 @@ small.text-muted {
   }
 }
 
-/* Responsive navbar fixes for medium screens (no overlap) */
+/* Responsive navbar for tablets - use toggle like mobile */
 @media (max-width: 991px) and (min-width: 768px) {
   .navbar-collapse {
-    position: static;
-    background-color: transparent;
-    padding: 0.5rem 0;
-    border: none;
+    background-color: var(--card);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(2,6,23,0.08);
+    z-index: 1025;
+  }
+
+  .theme-dark .navbar-collapse {
+    background-color: var(--dark-card);
   }
 
   .navbar-nav {
-    display: flex;
+    flex-direction: column;
+    width: 100%;
     gap: 0.5rem;
-    justify-content: center;
-    align-items: center;
   }
 
   .nav-item {
-    padding: 0.25rem 0.5rem;
-    border-bottom: none;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem 0;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+  }
+
+  .nav-item:hover {
+    background-color: rgba(77, 171, 247, 0.1);
+  }
+
+  .theme-dark .nav-item:hover {
+    background-color: rgba(77, 171, 247, 0.15);
+  }
+
+  .nav-link {
+    padding: 0.5rem 1rem;
   }
 
   .navbar-toggler {
-    border: none;
-    padding: 0.4rem;
-    margin-right: 0.5rem;
+    display: block !important;
+    border: 1px solid var(--border);
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+
+  .navbar-toggler:hover {
+    border-color: var(--accent-blue);
+    background-color: rgba(77, 171, 247, 0.05);
   }
 
   .navbar-toggler:focus {
-    box-shadow: none;
+    box-shadow: 0 0 0 0.15rem rgba(77, 171, 247, 0.25);
   }
-  /* Ensure collapse is visible and in-flow on medium screens to avoid disappearing */
-  .navbar-collapse {
-    display: flex !important;
-    flex-basis: auto;
-    align-items: center;
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.75%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  .theme-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.9%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
   }
 }
 
-/* Responsive navbar fixes for small screens (mobile): collapse overlays content */
-@media (max-width: 767px) {
+/* Additional mobile-specific styles for very small screens */
+@media (max-width: 575px) {
   /* mobile search inside collapse */
   #mobile-search-input {
     width: 100%;
@@ -344,7 +387,7 @@ small.text-muted {
   }
 
   .navbar-toggler {
-    z-index: 1100; /* ensure toggler is above other content */
+    z-index: 1026; /* above navbar-collapse but below modal */
   }
   /* Mobile collapsed menu should be opaque and cover content behind it */
   .navbar-collapse {
@@ -356,7 +399,7 @@ small.text-muted {
     padding: 1rem;
     border-top: 1px solid var(--border);
     box-shadow: 0 8px 30px rgba(2,6,23,0.08);
-    z-index: 1400; /* collapsed menu should be above navbar and other content */
+    z-index: 1025; /* below modal (1055) but above main content */
   }
 
   .navbar-nav {
