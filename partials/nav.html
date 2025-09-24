@@ -1,22 +1,62 @@
 <nav class="navbar navbar-expand-lg navbar-dark border-bottom">
     <div class="container">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="index.html">Utama</a></li>
-                <li class="nav-item"><a class="nav-link" href="shop.html">Kedai</a></li>
-                <li class="nav-item"><a class="nav-link" href="services.html">Servis</a></li>
-                <li class="nav-item"><a class="nav-link" href="komuniti.html">Komuniti</a></li>
-                <li class="nav-item"><a class="nav-link" href="about.html">Siapa Saya</a></li>
+        <div class="d-flex align-items-center order-md-2">
+            <!-- Theme toggle for large screens -->
+            <button id="theme-toggle" class="btn btn-sm btn-outline-secondary d-none d-md-block me-2" aria-pressed="false" aria-label="Tukar Tema">
+                <span id="theme-toggle-icon">🌙</span>
+            </button>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+
+        <div class="collapse navbar-collapse order-md-1" id="navbarNav">
+            <ul class="navbar-nav mx-auto text-center">
+                <li class="nav-item py-2"><a class="nav-link" href="index.html">Utama</a></li>
+                <li class="nav-item py-2"><a class="nav-link" href="shop.html">Kedai</a></li>
+                <li class="nav-item py-2"><a class="nav-link" href="services.html">Servis</a></li>
+                <li class="nav-item py-2"><a class="nav-link" href="komuniti.html">Komuniti</a></li>
+                <li class="nav-item py-2"><a class="nav-link" href="about.html">Siapa Saya</a></li>
             </ul>
-            <div class="d-flex align-items-center">
-                <!-- Theme toggle -->
-                <button id="theme-toggle" class="btn btn-sm btn-outline-light" aria-pressed="false" aria-label="Tukar Tema">
-                    <span id="theme-toggle-icon">🌙</span>
+
+            <!-- Mobile-only search: visible on small screens inside collapse -->
+            <div class="d-lg-none w-100 mt-2">
+                <div class="input-group">
+                    <input type="search" id="mobile-search-input" class="form-control" placeholder="Cari post..." aria-label="Cari post (mobile)">
+                    <button class="btn btn-outline-secondary" type="button" id="mobile-search-button">🔍</button>
+                </div>
+                <button id="theme-toggle-mobile" class="btn btn-outline-secondary w-100 mt-2" aria-pressed="false" aria-label="Tukar Tema">
+                    <span id="theme-toggle-icon-mobile">🌙</span> Tukar Tema
                 </button>
             </div>
         </div>
     </div>
 </nav>
+
+<script>
+// Wire mobile search to existing searchPosts() and sync with main #search-input if present
+document.addEventListener('DOMContentLoaded', function () {
+    const mobileBtn = document.getElementById('mobile-search-button');
+    const mobileInput = document.getElementById('mobile-search-input');
+    if (mobileBtn && mobileInput) {
+        mobileBtn.addEventListener('click', function () {
+            // If main search input exists on page, copy value there and call searchPosts()
+            const mainInput = document.getElementById('search-input');
+            if (mainInput) mainInput.value = mobileInput.value;
+            if (typeof searchPosts === 'function') {
+                searchPosts();
+            } else {
+                // Fallback: trigger Enter on main input if present
+                if (mainInput) {
+                    const e = new KeyboardEvent('keypress', { key: 'Enter' });
+                    mainInput.dispatchEvent(e);
+                }
+            }
+        });
+        mobileInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') mobileBtn.click();
+        });
+    }
+});
+</script>

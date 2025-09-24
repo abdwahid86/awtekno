@@ -59,13 +59,31 @@ function getStoredTheme() {
 
 function setTheme(theme) {
     const html = document.documentElement;
-    if (theme === 'dark') {
+    const isDark = theme === 'dark';
+    
+    if (isDark) {
         html.classList.add('theme-dark');
-        document.getElementById && document.getElementById('theme-toggle-icon') && (document.getElementById('theme-toggle-icon').textContent = '🌙');
     } else {
         html.classList.remove('theme-dark');
-        document.getElementById && document.getElementById('theme-toggle-icon') && (document.getElementById('theme-toggle-icon').textContent = '☀️');
     }
+
+    // Update both desktop and mobile theme icons
+    ['theme-toggle-icon', 'theme-toggle-icon-mobile'].forEach(id => {
+        const icon = document.getElementById(id);
+        if (icon) {
+            icon.textContent = isDark ? '☀️' : '🌙';
+        }
+    });
+
+    // Update aria attributes for both buttons
+    ['theme-toggle', 'theme-toggle-mobile'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+            btn.setAttribute('aria-pressed', isDark.toString());
+            btn.setAttribute('aria-label', isDark ? 'Tukar ke Light Mode' : 'Tukar ke Dark Mode');
+        }
+    });
+
     try { localStorage.setItem('theme', theme); } catch (e) {}
 }
 
@@ -98,10 +116,15 @@ function initTheme() {
             }
         });
     }
-    // Bind toggle button
-    const btn = document.getElementById('theme-toggle');
-    if (btn) {
-        btn.addEventListener('click', toggleTheme);
-        btn.setAttribute('aria-pressed', document.documentElement.classList.contains('theme-dark'));
-    }
+    // Bind toggle buttons for both desktop and mobile
+    const desktopBtn = document.getElementById('theme-toggle');
+    const mobileBtn = document.getElementById('theme-toggle-mobile');
+    const isDark = document.documentElement.classList.contains('theme-dark');
+    
+    [desktopBtn, mobileBtn].forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', toggleTheme);
+            btn.setAttribute('aria-pressed', isDark);
+        }
+    });
 }
