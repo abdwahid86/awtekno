@@ -305,7 +305,7 @@
   border-color: rgba(255, 255, 255, 0.15) !important;
 }
 
-/* Special fix for alert-warning with role="alert" */
+/* Special fix untuk alert-warning dengan role="alert" */
 .theme-dark .alert-warning[role="alert"] {
   background-color: rgba(255, 193, 7, 0.15) !important;
   border-color: rgba(255, 193, 7, 0.3) !important;
@@ -364,7 +364,7 @@
   color: #3dd9ff !important;
 }
 
-/* Fix gradient text untuk dark theme */
+/* Fix gradient text in dark theme */
 .theme-dark .text-gradient {
   background: linear-gradient(135deg, var(--dark-accent-cyan), #a855f7) !important;
   -webkit-background-clip: text !important;
@@ -382,25 +382,59 @@
   color: #e8f1f8 !important;
 }
 
-/* Fix card body text specifically */
-.theme-dark .card-body {
-  color: #e8f1f8 !important;
-}
-
-.theme-dark .card-body p,
-.theme-dark .card-body span,
-.theme-dark .card-body div {
+/* Fix fw-bold text */
+.theme-dark .fw-bold {
   color: inherit !important;
 }
 
-/* Final override to ensure no dark text on dark background */
-.theme-dark * {
-  /* Ensure no pure black text */
-  color: inherit;
+/* Fix Shop/Services/Komuniti specific elements */
+.theme-dark #shop-products .card,
+.theme-dark #services-list .card,
+.theme-dark #resources-list .card {
+  background-color: #131825 !important;
+  border-color: #1e2436 !important;
 }
 
-.theme-dark body,
+.theme-dark #shop-products .card:hover,
+.theme-dark #services-list .card:hover,
+.theme-dark #resources-list .card:hover {
+  border-color: rgba(0, 212, 255, 0.3) !important;
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.15) !important;
+}
+
+/* Fix card images in dark theme */
+.theme-dark .card-img-top {
+  opacity: 0.95;
+  background: #1a1f2e !important;
+}
+
+/* Success button variant for dark theme */
+.theme-dark .btn-success {
+  background-color: rgba(40, 167, 69, 0.2) !important;
+  border-color: rgba(40, 167, 69, 0.4) !important;
+  color: #5dd77a !important;
+}
+
+.theme-dark .btn-success:hover {
+  background-color: rgba(40, 167, 69, 0.3) !important;
+  border-color: #5dd77a !important;
+  color: #6de88a !important;
+}
+
+/* Any remaining text that needs fixing */
 .theme-dark main,
 .theme-dark .container {
+  color: #e8f1f8 !important;
+}
+
+/* Fix for nested elements */
+.theme-dark * {
+  border-color: var(--dark-border);
+}
+
+.theme-dark input,
+.theme-dark textarea,
+.theme-dark select {
+  background-color: #1a1f2e !important;
   color: #e8f1f8 !important;
 }
