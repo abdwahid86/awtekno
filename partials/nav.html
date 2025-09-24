@@ -20,13 +20,9 @@
                 <li class="nav-item py-2"><a class="nav-link" href="about.html">Siapa Saya</a></li>
             </ul>
 
-            <!-- Mobile-only search: visible on small screens inside collapse -->
+            <!-- Mobile theme toggle only -->
             <div class="d-lg-none w-100 mt-2">
-                <div class="input-group">
-                    <input type="search" id="mobile-search-input" class="form-control" placeholder="Cari post..." aria-label="Cari post (mobile)">
-                    <button class="btn btn-outline-secondary" type="button" id="mobile-search-button">🔍</button>
-                </div>
-                <button id="theme-toggle-mobile" class="btn btn-outline-secondary w-100 mt-2" aria-pressed="false" aria-label="Tukar Tema">
+                <button id="theme-toggle-mobile" class="btn btn-outline-secondary w-100" aria-pressed="false" aria-label="Tukar Tema">
                     <span id="theme-toggle-icon-mobile">🌙</span> Tukar Tema
                 </button>
             </div>
@@ -35,17 +31,11 @@
 </nav>
 
 <script>
-// Initialize theme toggle buttons only - mobile search handled by mobile-search-sync.js
+// Initialize theme toggle buttons only - mobile search dah dibuang
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize theme toggle buttons
     if (typeof initTheme === 'function') {
         initTheme();
     }
-    
-    // Dispatch event to notify mobile-search-sync.js that partials are loaded
-    setTimeout(() => {
-        const event = new CustomEvent('partialsLoaded');
-        document.dispatchEvent(event);
-    }, 100);
 });
 </script>

@@ -1,39 +1,26 @@
 /**
- * Mobile Search Sync and Cross-Browser Compatibility
- * Untuk sync antara desktop search dan mobile search
- * Fixes Chrome mobile search issues
+ * Search Enhancement and Cross-Browser Compatibility
+ * Enhanced search untuk desktop dengan cross-browser support
+ * Mobile navbar search dah dibuang untuk cleaner UX
  */
 
 (function() {
     'use strict';
     
     let isInitialized = false;
-    let mobileSearchInitialized = false;
     
-    // Enhanced search function yang boleh handle both inputs
+    // Enhanced search function untuk desktop search
     function enhancedSearchPosts() {
         console.log('Enhanced search triggered');
         
-        // Get values from both search inputs
+        // Get values from main search input
         const mainSearchInput = document.getElementById('search-input');
-        const mobileSearchInput = document.getElementById('mobile-search-input');
         const categoryFilter = document.getElementById('category-filter');
         
         let searchTerm = '';
         
-        // Priority: use mobile input if it has focus, otherwise use main input
-        if (mobileSearchInput && document.activeElement === mobileSearchInput) {
-            searchTerm = mobileSearchInput.value.toLowerCase().trim();
-            // Sync to main input if exists
-            if (mainSearchInput) {
-                mainSearchInput.value = mobileSearchInput.value;
-            }
-        } else if (mainSearchInput) {
+        if (mainSearchInput) {
             searchTerm = mainSearchInput.value.toLowerCase().trim();
-            // Sync to mobile input if exists
-            if (mobileSearchInput) {
-                mobileSearchInput.value = mainSearchInput.value;
-            }
         }
         
         const selectedCategory = categoryFilter ? categoryFilter.value : '';
@@ -79,12 +66,10 @@
         console.log('Enhanced clear search triggered');
         
         const mainSearchInput = document.getElementById('search-input');
-        const mobileSearchInput = document.getElementById('mobile-search-input');
         const categoryFilter = document.getElementById('category-filter');
         
-        // Clear all inputs
+        // Clear inputs
         if (mainSearchInput) mainSearchInput.value = '';
-        if (mobileSearchInput) mobileSearchInput.value = '';
         if (categoryFilter) categoryFilter.value = '';
         
         // Use global variables from main.js
@@ -101,74 +86,6 @@
             if (typeof clearSearch === 'function') {
                 clearSearch();
             }
-        }
-    }
-    
-    // Initialize mobile search functionality
-    function initializeMobileSearch() {
-        if (mobileSearchInitialized) {
-            console.log('Mobile search already initialized');
-            return;
-        }
-        
-        console.log('Initializing mobile search...');
-        
-        const mobileBtn = document.getElementById('mobile-search-button');
-        const mobileInput = document.getElementById('mobile-search-input');
-        
-        if (mobileBtn && mobileInput) {
-            console.log('Mobile search elements found, setting up event listeners...');
-            
-            // Remove any existing event listeners to prevent duplicates
-            mobileBtn.removeEventListener('click', handleMobileSearchClick);
-            mobileInput.removeEventListener('keypress', handleMobileSearchKeypress);
-            mobileInput.removeEventListener('input', handleMobileSearchInput);
-            
-            // Add event listeners
-            mobileBtn.addEventListener('click', handleMobileSearchClick, { passive: false });
-            mobileInput.addEventListener('keypress', handleMobileSearchKeypress, { passive: false });
-            mobileInput.addEventListener('input', handleMobileSearchInput, { passive: true });
-            
-            // Fix Chrome mobile focus issues
-            mobileInput.addEventListener('focus', function() {
-                console.log('Mobile input focused');
-                // Ensure input is properly visible on Chrome mobile
-                setTimeout(() => {
-                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 100);
-            });
-            
-            mobileSearchInitialized = true;
-            console.log('Mobile search initialization complete');
-        } else {
-            console.log('Mobile search elements not found yet');
-        }
-    }
-    
-    // Mobile search button click handler
-    function handleMobileSearchClick(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log('Mobile search button clicked');
-        enhancedSearchPosts();
-    }
-    
-    // Mobile search input keypress handler
-    function handleMobileSearchKeypress(e) {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Mobile search Enter pressed');
-            enhancedSearchPosts();
-        }
-    }
-    
-    // Mobile search input change handler (for real-time sync)
-    function handleMobileSearchInput(e) {
-        // Sync with main search input if it exists
-        const mainSearchInput = document.getElementById('search-input');
-        if (mainSearchInput && e.target.value !== mainSearchInput.value) {
-            mainSearchInput.value = e.target.value;
         }
     }
     
@@ -220,29 +137,24 @@
         }
     }
     
-    // Main search input change handler (for real-time sync)
+    // Main search input change handler
     function handleMainSearchInput(e) {
-        // Sync with mobile search input if it exists
-        const mobileSearchInput = document.getElementById('mobile-search-input');
-        if (mobileSearchInput && e.target.value !== mobileSearchInput.value) {
-            mobileSearchInput.value = e.target.value;
-        }
+        // Could add real-time search here if needed
+        // For now, just log the input change
+        console.log('Main search input changed:', e.target.value);
     }
     
     // Initialize everything
-    function initializeSearchSync() {
+    function initializeSearchEnhancement() {
         if (isInitialized) {
-            console.log('Search sync already initialized');
+            console.log('Search enhancement already initialized');
             return;
         }
         
-        console.log('Starting search sync initialization...');
+        console.log('Starting search enhancement initialization...');
         
         // Initialize main search
         initializeMainSearch();
-        
-        // Initialize mobile search
-        initializeMobileSearch();
         
         // Override global search functions if they exist
         if (typeof window.searchPosts !== 'undefined') {
@@ -260,45 +172,19 @@
         window.enhancedClearSearch = enhancedClearSearch;
         
         isInitialized = true;
-        console.log('Search sync initialization complete');
+        console.log('Search enhancement initialization complete');
     }
     
     // Try to initialize immediately if DOM is ready
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing search sync...');
+            console.log('DOM loaded, initializing search enhancement...');
             // Wait a bit for other scripts to load
-            setTimeout(initializeSearchSync, 500);
+            setTimeout(initializeSearchEnhancement, 500);
         });
     } else {
-        console.log('DOM already loaded, initializing search sync...');
-        setTimeout(initializeSearchSync, 100);
+        console.log('DOM already loaded, initializing search enhancement...');
+        setTimeout(initializeSearchEnhancement, 100);
     }
-    
-    // Also try to initialize when partials are loaded
-    // Listen for custom events if main.js dispatches them
-    document.addEventListener('partialsLoaded', function() {
-        console.log('Partials loaded event detected');
-        setTimeout(initializeMobileSearch, 200);
-    });
-    
-    // Fallback: try to initialize periodically until successful
-    let initAttempts = 0;
-    const maxInitAttempts = 20;
-    
-    function attemptInitialization() {
-        initAttempts++;
-        
-        if (!mobileSearchInitialized) {
-            initializeMobileSearch();
-        }
-        
-        if (initAttempts < maxInitAttempts && !mobileSearchInitialized) {
-            setTimeout(attemptInitialization, 500);
-        }
-    }
-    
-    // Start fallback initialization attempts
-    setTimeout(attemptInitialization, 1000);
     
 })();
