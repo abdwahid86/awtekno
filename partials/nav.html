@@ -35,34 +35,17 @@
 </nav>
 
 <script>
-// Initialize theme and wire mobile search
+// Initialize theme toggle buttons only - mobile search handled by mobile-search-sync.js
 document.addEventListener('DOMContentLoaded', function () {
     // Initialize theme toggle buttons
     if (typeof initTheme === 'function') {
         initTheme();
     }
     
-    // Wire mobile search to existing searchPosts() and sync with main #search-input if present
-    const mobileBtn = document.getElementById('mobile-search-button');
-    const mobileInput = document.getElementById('mobile-search-input');
-    if (mobileBtn && mobileInput) {
-        mobileBtn.addEventListener('click', function () {
-            // If main search input exists on page, copy value there and call searchPosts()
-            const mainInput = document.getElementById('search-input');
-            if (mainInput) mainInput.value = mobileInput.value;
-            if (typeof searchPosts === 'function') {
-                searchPosts();
-            } else {
-                // Fallback: trigger Enter on main input if present
-                if (mainInput) {
-                    const e = new KeyboardEvent('keypress', { key: 'Enter' });
-                    mainInput.dispatchEvent(e);
-                }
-            }
-        });
-        mobileInput.addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') mobileBtn.click();
-        });
-    }
+    // Dispatch event to notify mobile-search-sync.js that partials are loaded
+    setTimeout(() => {
+        const event = new CustomEvent('partialsLoaded');
+        document.dispatchEvent(event);
+    }, 100);
 });
 </script>

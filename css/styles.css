@@ -597,21 +597,21 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--accent-blue) !important;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments - Fixed in responsive-search-fix.css */
 @media (max-width: 480px) {
   .display-4 {
     font-size: 2rem;
   }
   
-  /* Only stack input-group vertically on very small screens */
-  .input-group {
+  /* Input group stacking handled by responsive-search-fix.css */
+  /* .input-group {
     flex-direction: column;
   }
   
   .input-group .btn {
     border-radius: 0.375rem !important;
     margin-top: 0.5rem;
-  }
+  } */
   
   .card-title {
     font-size: 1.1rem;
