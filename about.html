@@ -179,6 +179,14 @@
                 if (typeof loadHead === 'function') loadHead();
                 if (typeof loadAnalytics === 'function') loadAnalytics();
                 
+                // Initialize theme AFTER partials are loaded
+                setTimeout(() => {
+                    if (typeof initTheme === 'function') {
+                        console.log('Initializing theme...');
+                        initTheme();
+                    }
+                }, 100);
+                
                 console.log('About page initialized');
             } catch (error) {
                 console.error('Error initializing about page:', error);

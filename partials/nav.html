@@ -35,8 +35,14 @@
 </nav>
 
 <script>
-// Wire mobile search to existing searchPosts() and sync with main #search-input if present
+// Initialize theme and wire mobile search
 document.addEventListener('DOMContentLoaded', function () {
+    // Initialize theme toggle buttons
+    if (typeof initTheme === 'function') {
+        initTheme();
+    }
+    
+    // Wire mobile search to existing searchPosts() and sync with main #search-input if present
     const mobileBtn = document.getElementById('mobile-search-button');
     const mobileInput = document.getElementById('mobile-search-input');
     if (mobileBtn && mobileInput) {

@@ -1,0 +1,223 @@
+/* Mobile Search Box Cross-Browser Fix */
+/* Fixes untuk Chrome, Firefox, Safari, Edge */
+
+/* Fix untuk mobile search input group */
+@media (max-width: 991px) {
+  /* Ensure mobile search container is visible */
+  .d-lg-none {
+    display: block !important;
+  }
+  
+  /* Fix input group flexbox untuk cross-browser */
+  #navbarNav .input-group {
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 100%;
+    flex-wrap: nowrap;
+  }
+  
+  /* Mobile search input specific fixes */
+  #mobile-search-input {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1% !important; /* Force Chrome to calculate flex properly */
+    min-width: 0; /* Prevent overflow */
+    background-color: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-right: 0 !important;
+    border-radius: 0.375rem 0 0 0.375rem !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    color: var(--text) !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  /* Mobile search button specific fixes */
+  #mobile-search-button {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    white-space: nowrap;
+    background-color: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-left: 0 !important;
+    border-radius: 0 0.375rem 0.375rem 0 !important;
+    padding: 0.375rem 0.75rem !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    color: var(--text) !important;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+  
+  /* Fix focus states */
+  #mobile-search-input:focus {
+    background-color: var(--card) !important;
+    border-color: var(--accent-blue) !important;
+    color: var(--text) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 0.2rem rgba(77, 171, 247, 0.15) !important;
+  }
+  
+  #mobile-search-button:hover {
+    background-color: rgba(77, 171, 247, 0.1) !important;
+    border-color: var(--accent-blue) !important;
+  }
+  
+  /* Fix placeholder text */
+  #mobile-search-input::-webkit-input-placeholder {
+    color: var(--text-muted) !important;
+    opacity: 1 !important;
+  }
+  
+  #mobile-search-input::-moz-placeholder {
+    color: var(--text-muted) !important;
+    opacity: 1 !important;
+  }
+  
+  #mobile-search-input:-ms-input-placeholder {
+    color: var(--text-muted) !important;
+    opacity: 1 !important;
+  }
+  
+  #mobile-search-input::-ms-input-placeholder {
+    color: var(--text-muted) !important;
+    opacity: 1 !important;
+  }
+  
+  #mobile-search-input::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 1 !important;
+  }
+  
+  /* Theme toggle mobile button */
+  #theme-toggle-mobile {
+    display: block !important;
+    width: 100% !important;
+    margin-top: 0.75rem !important;
+    padding: 0.5rem 1rem !important;
+    background-color: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 0.375rem !important;
+    color: var(--text) !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  #theme-toggle-mobile:hover {
+    background-color: rgba(77, 171, 247, 0.1) !important;
+    border-color: var(--accent-blue) !important;
+  }
+}
+
+/* Additional fixes for very small screens */
+@media (max-width: 575px) {
+  /* Override any conflicting styles */
+  #mobile-search-input,
+  #mobile-search-button {
+    height: calc(1.5em + 0.75rem + 2px) !important;
+    display: block !important;
+  }
+  
+  /* Ensure input group stays horizontal on small screens */
+  #navbarNav .input-group {
+    flex-direction: row !important;
+    -webkit-box-orient: horizontal !important;
+    -webkit-box-direction: normal !important;
+    -ms-flex-direction: row !important;
+  }
+}
+
+/* Dark theme specific fixes */
+.theme-dark #mobile-search-input {
+  background-color: var(--dark-card) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--text-light) !important;
+}
+
+.theme-dark #mobile-search-button {
+  background-color: var(--dark-card) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--text-light) !important;
+}
+
+.theme-dark #mobile-search-input:focus {
+  background-color: var(--dark-card) !important;
+  border-color: var(--accent-blue) !important;
+}
+
+.theme-dark #mobile-search-button:hover {
+  background-color: rgba(77, 171, 247, 0.15) !important;
+}
+
+.theme-dark #theme-toggle-mobile {
+  background-color: var(--dark-card) !important;
+  border-color: var(--dark-border) !important;
+  color: var(--text-light) !important;
+}
+
+.theme-dark #theme-toggle-mobile:hover {
+  background-color: rgba(77, 171, 247, 0.15) !important;
+  border-color: var(--accent-blue) !important;
+}
+
+/* Fix untuk Chrome specific rendering issues */
+@supports (-webkit-appearance: none) {
+  #mobile-search-input {
+    -webkit-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+  }
+  
+  #mobile-search-button {
+    -webkit-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* Fix untuk Firefox specific issues */
+@-moz-document url-prefix() {
+  #mobile-search-input {
+    box-sizing: border-box !important;
+  }
+  
+  #mobile-search-button {
+    box-sizing: border-box !important;
+  }
+}
+
+/* Ensure navbar collapse content is properly visible */
+@media (max-width: 991px) {
+  .navbar-collapse.show {
+    display: block !important;
+  }
+  
+  .navbar-collapse:not(.show) {
+    display: none !important;
+  }
+  
+  /* Fix container width dalam collapse */
+  .navbar-collapse .w-100 {
+    width: 100% !important;
+  }
+  
+  /* Ensure proper spacing */
+  .navbar-collapse .mt-2 {
+    margin-top: 0.5rem !important;
+  }
+}

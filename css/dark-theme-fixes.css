@@ -1,0 +1,406 @@
+/* Dark Theme Readability Improvements */
+/* This file ensures all text in dark theme is easily readable */
+
+/* Ensure all muted text has good contrast in dark theme */
+.theme-dark .text-muted,
+.theme-dark .text-secondary {
+  color: #c4d4f0 !important;
+  opacity: 1 !important;
+}
+
+/* Card text improvements */
+.theme-dark .card-text.text-muted,
+.theme-dark .card-text small,
+.theme-dark .card .text-muted,
+.theme-dark small.text-muted {
+  color: #b8c8e0 !important;
+  opacity: 1 !important;
+}
+
+/* Main card text should be brighter */
+.theme-dark .card-text:not(.text-muted) {
+  color: #e8f1f8 !important;
+}
+
+/* Ensure post title is visible */
+.theme-dark .card-title,
+.theme-dark .small-heading {
+  color: var(--dark-accent-cyan) !important;
+  opacity: 1 !important;
+}
+
+/* Ensure links are visible */
+.theme-dark a:not(.btn):not(.nav-link):not(.page-link) {
+  color: var(--dark-accent-cyan);
+}
+
+.theme-dark a:not(.btn):not(.nav-link):not(.page-link):hover {
+  color: #33daff;
+  text-decoration: underline;
+}
+
+/* Form elements readability */
+.theme-dark .form-control,
+.theme-dark .form-select {
+  background-color: #1a1f2e !important;
+  border-color: #2a3444 !important;
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .form-control::placeholder {
+  color: #8896b0 !important;
+  opacity: 1 !important;
+}
+
+/* Pagination readability */
+.theme-dark .pagination .page-link {
+  background-color: #131825 !important;
+  border-color: #1e2436 !important;
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .pagination .page-link:hover {
+  background-color: var(--dark-accent-cyan) !important;
+  border-color: var(--dark-accent-cyan) !important;
+  color: #0a0e1a !important;
+}
+
+.theme-dark .pagination .page-item.active .page-link {
+  background-color: var(--dark-accent-cyan) !important;
+  border-color: var(--dark-accent-cyan) !important;
+  color: #0a0e1a !important;
+}
+
+.theme-dark .pagination .page-item.disabled .page-link {
+  background-color: #0a0e1a !important;
+  color: #5a6478 !important;
+  opacity: 0.6 !important;
+}
+
+/* Modal content in dark theme */
+.theme-dark .modal-content {
+  background-color: #131825 !important;
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .modal-header,
+.theme-dark .modal-footer {
+  border-color: #1e2436 !important;
+}
+
+.theme-dark .modal-title {
+  color: var(--dark-accent-cyan) !important;
+}
+
+/* Code blocks in dark theme */
+.theme-dark .modal-body pre {
+  background-color: #0a0e1a !important;
+  border-color: #1e2436 !important;
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .modal-body code {
+  background-color: #1a1f2e !important;
+  color: var(--dark-accent-cyan) !important;
+}
+
+/* Results count text */
+.theme-dark #results-count,
+.theme-dark #shop-results-count,
+.theme-dark #service-results-count,
+.theme-dark #resource-results-count {
+  color: #b8c8e0 !important;
+}
+
+/* Navbar text improvements */
+.theme-dark .navbar .nav-link {
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .navbar .nav-link:hover {
+  color: var(--dark-accent-cyan) !important;
+}
+
+/* Button text contrast */
+.theme-dark .btn-secondary {
+  background-color: #1e2436 !important;
+  border-color: #2a3444 !important;
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .btn-secondary:hover {
+  background-color: #2a3444 !important;
+  border-color: var(--dark-accent-cyan) !important;
+  color: var(--dark-accent-cyan) !important;
+}
+
+/* Badge and label visibility */
+.theme-dark .badge {
+  opacity: 1 !important;
+}
+
+/* Dropdown menu in dark theme */
+.theme-dark .dropdown-menu {
+  background-color: #131825 !important;
+  border-color: #1e2436 !important;
+}
+
+.theme-dark .dropdown-item {
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .dropdown-item:hover {
+  background-color: rgba(0, 212, 255, 0.1) !important;
+  color: var(--dark-accent-cyan) !important;
+}
+
+/* Ensure all headings are visible */
+.theme-dark h1,
+.theme-dark h2,
+.theme-dark h3,
+.theme-dark h4,
+.theme-dark h5,
+.theme-dark h6 {
+  color: #e8f1f8 !important;
+}
+
+/* Fix any remaining low contrast text */
+.theme-dark *:not(.btn):not(code) {
+  color: inherit;
+}
+
+/* Ensure minimum contrast ratio */
+.theme-dark [style*="color"] {
+  opacity: 1 !important;
+}
+
+/* ========================================= */
+/* FIX UNTUK ALERT BOXES DAN CONTENT-TEXT */
+/* ========================================= */
+
+/* Fix Bootstrap Alert Colors untuk Dark Theme */
+.theme-dark .alert {
+  color: #e8f1f8 !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.theme-dark .alert-warning {
+  background-color: rgba(255, 193, 7, 0.15) !important;
+  border-color: rgba(255, 193, 7, 0.3) !important;
+  color: #ffd43b !important;
+}
+
+.theme-dark .alert-warning strong {
+  color: #ffed4e !important;
+}
+
+.theme-dark .alert-info {
+  background-color: rgba(13, 202, 240, 0.15) !important;
+  border-color: rgba(13, 202, 240, 0.3) !important;
+  color: #3dd9ff !important;
+}
+
+.theme-dark .alert-danger {
+  background-color: rgba(220, 53, 69, 0.15) !important;
+  border-color: rgba(220, 53, 69, 0.3) !important;
+  color: #ff6b7d !important;
+}
+
+.theme-dark .alert-success {
+  background-color: rgba(40, 167, 69, 0.15) !important;
+  border-color: rgba(40, 167, 69, 0.3) !important;
+  color: #5dd77a !important;
+}
+
+.theme-dark .alert-primary {
+  background-color: rgba(0, 123, 255, 0.15) !important;
+  border-color: rgba(0, 123, 255, 0.3) !important;
+  color: #4dabff !important;
+}
+
+/* Fix Content-Text Sections (About Page) */
+.theme-dark .content-text {
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .content-text p {
+  color: #e8f1f8 !important;
+  line-height: 1.7;
+  opacity: 1 !important;
+}
+
+.theme-dark .content-text h1,
+.theme-dark .content-text h2,
+.theme-dark .content-text h3,
+.theme-dark .content-text h4,
+.theme-dark .content-text h5,
+.theme-dark .content-text h6 {
+  color: var(--dark-accent-cyan) !important;
+}
+
+.theme-dark .content-text ul,
+.theme-dark .content-text ol {
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .content-text li {
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .content-text blockquote {
+  color: #c4d4f0 !important;
+  border-left-color: var(--dark-accent-cyan) !important;
+}
+
+/* Fix About Page Specific Elements */
+.theme-dark .about-content {
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .about-content p {
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .feature-card {
+  background: rgba(0, 212, 255, 0.08) !important;
+  border-color: rgba(0, 212, 255, 0.2) !important;
+}
+
+.theme-dark .feature-card:hover {
+  background: rgba(0, 212, 255, 0.12) !important;
+  border-color: rgba(0, 212, 255, 0.3) !important;
+}
+
+.theme-dark .feature-card h5 {
+  color: var(--dark-accent-cyan) !important;
+}
+
+.theme-dark .feature-card p {
+  color: #c4d4f0 !important;
+}
+
+/* Fix Profile Card for About Page */
+.theme-dark .profile-avatar {
+  background: linear-gradient(135deg, var(--dark-accent-cyan), #a855f7) !important;
+}
+
+/* Fix Google Form iframe untuk dark theme */
+.theme-dark #contact-form-container iframe {
+  background-color: #1a1f2e !important;
+  filter: invert(0.9) hue-rotate(180deg);
+}
+
+/* Badge colors in dark theme */
+.theme-dark .badge.bg-primary {
+  background-color: rgba(0, 212, 255, 0.2) !important;
+  color: var(--dark-accent-cyan) !important;
+  border: 1px solid rgba(0, 212, 255, 0.3) !important;
+}
+
+/* Fix for any div with role="alert" */
+.theme-dark [role="alert"] {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  color: #e8f1f8 !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Special fix for alert-warning with role="alert" */
+.theme-dark .alert-warning[role="alert"] {
+  background-color: rgba(255, 193, 7, 0.15) !important;
+  border-color: rgba(255, 193, 7, 0.3) !important;
+  color: #ffd43b !important;
+}
+
+/* Ensure all paragraphs in dark theme are readable */
+.theme-dark p {
+  color: #e8f1f8 !important;
+  opacity: 1 !important;
+}
+
+/* Fix any section or div that might have dark text */
+.theme-dark section,
+.theme-dark div:not(.alert):not(.badge) {
+  color: #e8f1f8;
+}
+
+/* Override any inline styles that might cause issues */
+.theme-dark [style*="color: black"],
+.theme-dark [style*="color:#000"],
+.theme-dark [style*="color: #000"] {
+  color: #e8f1f8 !important;
+}
+
+/* Fix text in card headers */
+.theme-dark .card-header {
+  background-color: #1a1f2e !important;
+  color: #e8f1f8 !important;
+  border-bottom-color: #2a3444 !important;
+}
+
+.theme-dark .card-header.bg-primary {
+  background-color: rgba(0, 212, 255, 0.15) !important;
+  color: var(--dark-accent-cyan) !important;
+}
+
+/* Fix any remaining Bootstrap utility classes */
+.theme-dark .text-primary {
+  color: var(--dark-accent-cyan) !important;
+}
+
+.theme-dark .text-warning {
+  color: #ffd43b !important;
+}
+
+.theme-dark .text-danger {
+  color: #ff6b7d !important;
+}
+
+.theme-dark .text-success {
+  color: #5dd77a !important;
+}
+
+.theme-dark .text-info {
+  color: #3dd9ff !important;
+}
+
+/* Fix gradient text untuk dark theme */
+.theme-dark .text-gradient {
+  background: linear-gradient(135deg, var(--dark-accent-cyan), #a855f7) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+/* Ensure display headings are visible */
+.theme-dark .display-1,
+.theme-dark .display-2,
+.theme-dark .display-3,
+.theme-dark .display-4,
+.theme-dark .display-5,
+.theme-dark .display-6 {
+  color: #e8f1f8 !important;
+}
+
+/* Fix card body text specifically */
+.theme-dark .card-body {
+  color: #e8f1f8 !important;
+}
+
+.theme-dark .card-body p,
+.theme-dark .card-body span,
+.theme-dark .card-body div {
+  color: inherit !important;
+}
+
+/* Final override to ensure no dark text on dark background */
+.theme-dark * {
+  /* Ensure no pure black text */
+  color: inherit;
+}
+
+.theme-dark body,
+.theme-dark main,
+.theme-dark .container {
+  color: #e8f1f8 !important;
+}

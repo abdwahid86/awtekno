@@ -88,6 +88,16 @@
                 if (typeof loadHead === 'function') loadHead();
                 if (typeof loadAnalytics === 'function') loadAnalytics();
                 
+                // Initialize theme AFTER partials are loaded
+                setTimeout(() => {
+                    if (typeof initTheme === 'function') {
+                        console.log('Initializing theme...');
+                        initTheme();
+                    } else {
+                        console.error('initTheme function not found!');
+                    }
+                }, 200);
+                
                 await loadPosts();
                 
                 const searchInput = document.getElementById('search-input');
