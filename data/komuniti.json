@@ -6,6 +6,13 @@
     "category": "SAAS",
     "tags": ["forms", "business", "malaysia", "productivity"]
   },
+    {
+    "name": "Pandai",
+    "description": "Platform pembelajaran dalam talian untuk pelajar sekolah di Malaysia.",
+    "link": "https://pandai.my",
+    "category": "SAAS",
+    "tags": ["learning", "education", "malaysia", "productivity"]
+  },
   {
     "name": "Infratify",
     "description": "Infratify adalah platform pembelajaran dalam talian yang menyediakan kursus IT digital berkualiti tinggi dalam pelbagai bidang seperti cloud computing, DevOps, server management, dan networking.",
@@ -16,7 +23,7 @@
   {
     "name": "Traits - Baiki laptop",
     "description": "Bertempat di Taman Melawati. Menawarkan servis baiki laptop.",
-    "link": "https://laptoprepairnearme.my/traits/",
+    "link": "https://www.carousell.com.my/u/traits/?srsltid=AfmBOopYN-Ewq3bB-mgzY3YxPEzJ10oaE4Svqe3FdKcBRm36HbWsJNe3",
     "category": "Services",
     "tags": ["repair", "laptop", "malaysia", "directory"]
   },
