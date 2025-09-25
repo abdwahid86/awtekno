@@ -19,6 +19,65 @@ const itemsPerPage = 6;
 // Store current post for sharing
 let currentPost = null;
 
+// Store original homepage meta tags for SEO restoration
+let originalMetaTags = {};
+
+// SEO Meta Tag Management Functions
+function storeOriginalMetaTags() {
+    originalMetaTags.title = document.title;
+    originalMetaTags.description = getMetaContent('description');
+    originalMetaTags.ogTitle = getMetaContent('og:title', 'property');
+    originalMetaTags.ogDescription = getMetaContent('og:description', 'property');
+    originalMetaTags.ogUrl = getMetaContent('og:url', 'property');
+}
+
+function updateSEOMetaTags(post) {
+    const postUrl = `${window.location.origin}${window.location.pathname}#post-${encodeURIComponent(post.slug || 'post')}`;
+    const postTitle = `${post.title} - awtekno.com`;
+    const postDescription = post.excerpt || post.title;
+    
+    // Update page title and meta tags
+    document.title = postTitle;
+    updateMetaTag('description', postDescription);
+    updateMetaTag('og:title', post.title, 'property');
+    updateMetaTag('og:description', postDescription, 'property');
+    updateMetaTag('og:url', postUrl, 'property');
+    updateMetaTag('og:type', 'article', 'property');
+}
+
+function restoreHomepageMetaTags() {
+    document.title = originalMetaTags.title || 'awtekno.com - Perkongsian Teknologi';
+    updateMetaTag('description', originalMetaTags.description || 'Blog perkongsian maklumat.');
+    updateMetaTag('og:title', originalMetaTags.ogTitle || 'awtekno.com', 'property');
+    updateMetaTag('og:type', 'website', 'property');
+}
+
+function getMetaContent(name, attribute = 'name') {
+    const meta = document.querySelector(`meta[${attribute}="${name}"]`);
+    return meta ? meta.getAttribute('content') : '';
+}
+
+function updateMetaTag(name, content, attribute = 'name') {
+    let meta = document.querySelector(`meta[${attribute}="${name}"]`);
+    if (meta) {
+        meta.setAttribute('content', content);
+    } else {
+        meta = document.createElement('meta');
+        meta.setAttribute(attribute, name);
+        meta.setAttribute('content', content);
+        document.head.appendChild(meta);
+    }
+}
+
+function formatPostDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('ms-MY', {
+        year: 'numeric',
+        month: 'long', 
+        day: 'numeric'
+    });
+}
+
 async function loadPartials() {
     try {
         const [header, nav, footer] = await Promise.all([
@@ -242,6 +301,9 @@ async function showPost(post) {
     currentPost = post;
 
     try {
+        // Update SEO meta tags for better search engine optimization
+        updateSEOMetaTags(post);
+        
         const modalTitle = document.getElementById('post-modal-label');
         const postContent = document.getElementById('post-content');
 
@@ -254,12 +316,20 @@ async function showPost(post) {
 
         // set URL hash so post can be shared / linked
         try {
-            // prefer slug in hash so links are readable and stable
+            // Use slug in hash for readable URLs
             if (post.slug) {
+                const newUrl = `${window.location.origin}${window.location.pathname}#post-${encodeURIComponent(post.slug)}`;
                 history.replaceState(null, '', `#post-${encodeURIComponent(post.slug)}`);
+                
+                // Update canonical URL for SEO
+                updateCanonicalURL(newUrl);
             } else {
                 const index = allPosts.findIndex(p => p === post);
-                if (index >= 0) history.replaceState(null, '', `#post-${index}`);
+                if (index >= 0) {
+                    const newUrl = `${window.location.origin}${window.location.pathname}#post-${index}`;
+                    history.replaceState(null, '', `#post-${index}`);
+                    updateCanonicalURL(newUrl);
+                }
             }
         } catch (err) {
             console.warn('Unable to set post hash for sharing:', err);
@@ -276,13 +346,69 @@ async function showPost(post) {
             console.warn('Post content is empty or minimal.');
         }
 
-        postContent.innerHTML = post.format === 'markdown' ? renderMarkdown(content) : content;
+        // Add post metadata before content
+        let postHTML = `
+            <div class="post-meta mb-4">
+                <div class="d-flex flex-wrap align-items-center text-muted mb-3">
+                    <span class="me-3">
+                        <i class="fas fa-calendar-alt me-1"></i>
+                        <time datetime="${post.date}">${formatPostDate(post.date)}</time>
+                    </span>
+                    ${post.categories ? `
+                        <span class="me-3">
+                            <i class="fas fa-folder me-1"></i>
+                            ${post.categories.join(', ')}
+                        </span>
+                    ` : ''}
+                    ${post.tags ? `
+                        <span>
+                            <i class="fas fa-tags me-1"></i>
+                            ${post.tags.join(', ')}
+                        </span>
+                    ` : ''}
+                </div>
+                ${post.excerpt ? `<p class="lead text-muted">${escapeHtml(post.excerpt)}</p>` : ''}
+            </div>
+            <hr class="mb-4">
+        `;
+
+        // Add rendered content
+        postHTML += post.format === 'markdown' ? renderMarkdown(content) : content;
+
+        // Add sharing section
+        postHTML += `
+            <hr class="mt-5 mb-4">
+            <div class="post-sharing">
+                <h6 class="fw-bold mb-3">Kongsi post ini:</h6>
+                <div class="d-flex gap-2 flex-wrap">
+                    <button onclick="sharePostOnFacebook()" class="btn btn-outline-primary btn-sm">
+                        <i class="fab fa-facebook-f me-1"></i> Facebook
+                    </button>
+                    <button onclick="sharePostOnTwitter()" class="btn btn-outline-info btn-sm">
+                        <i class="fab fa-twitter me-1"></i> Twitter
+                    </button>
+                    <button onclick="sharePostOnWhatsApp()" class="btn btn-outline-success btn-sm">
+                        <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                    </button>
+                    <button onclick="copyPostLink()" class="btn btn-outline-secondary btn-sm">
+                        <i class="fas fa-link me-1"></i> Copy Link
+                    </button>
+                </div>
+            </div>
+        `;
+
+        postContent.innerHTML = postHTML;
 
         const modalElement = document.getElementById('post-modal');
         if (modalElement) {
             if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
                 const modal = new bootstrap.Modal(modalElement);
                 modal.show();
+                
+                // Listen for modal close to restore homepage meta tags
+                modalElement.addEventListener('hidden.bs.modal', function() {
+                    restoreHomepageMetaTags();
+                }, { once: true });
             } else {
                 modalElement.style.display = 'block';
                 modalElement.classList.add('show');
@@ -412,14 +538,24 @@ function renderShopItems() {
         const card = document.createElement('div');
         card.className = 'col';
         card.innerHTML = `
-            <div class="card h-100">
-                <img src="${item.image_url}" class="card-img-top" alt="${escapeHtml(item.name)}" loading="lazy" style="width: 100%; max-height: 250px; object-fit: contain; background: #2d2d2d;">
+            <article class="card h-100" itemscope itemtype="https://schema.org/Product">
+                <img src="${item.image_url}" 
+                     class="card-img-top" 
+                     alt="${escapeHtml(item.name)}" 
+                     loading="lazy" 
+                     style="width: 100%; max-height: 250px; object-fit: contain; background: #2d2d2d;"
+                     itemprop="image">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${escapeHtml(item.name)}</h5>
-                    <p class="card-text flex-grow-1">${escapeHtml(item.description)}</p>
-                    <a href="${item.link}" target="_blank" class="btn btn-primary mt-auto">Beli Sekarang</a>
+                    <h3 class="card-title h5" itemprop="name">${escapeHtml(item.name)}</h3>
+                    <p class="card-text flex-grow-1" itemprop="description">${escapeHtml(item.description)}</p>
+                    <a href="${item.link}" 
+                       target="_blank" 
+                       rel="nofollow noopener" 
+                       class="btn btn-primary mt-auto"
+                       itemprop="url">🛒 Tengok Harga</a>
+                    <small class="text-muted text-center mt-1">🔗 Affiliate link</small>
                 </div>
-            </div>
+            </article>
         `;
         container.appendChild(card);
     });
@@ -541,13 +677,20 @@ function renderServiceItems() {
         const card = document.createElement('div');
         card.className = 'col';
         card.innerHTML = `
-            <div class="card h-100">
+            <article class="card h-100" itemscope itemtype="https://schema.org/Service">
                 <div class="card-body d-flex flex-column">
-                    <h3 class="card-title">${escapeHtml(item.name)}</h3>
-                    <p class="card-text flex-grow-1">${escapeHtml(item.description)}</p>
-                    <a href="${item.link}" target="_blank" class="btn btn-success mt-auto">Lawati</a>
+                    <h3 class="card-title h5" itemprop="name">${escapeHtml(item.name)}</h3>
+                    <p class="card-text flex-grow-1" itemprop="description">${escapeHtml(item.description)}</p>
+                    <div class="mt-auto">
+                        <a href="${item.link}" 
+                           target="_blank" 
+                           rel="nofollow noopener"
+                           class="btn btn-success w-100"
+                           itemprop="url">🚀 Cuba Sekarang</a>
+                        <small class="text-muted text-center mt-1 d-block">🔗 Affiliate link</small>
+                    </div>
                 </div>
-            </div>
+            </article>
         `;
         container.appendChild(card);
     });
@@ -684,13 +827,17 @@ function renderResourceItems() {
         const card = document.createElement('div');
         card.className = 'col';
         card.innerHTML = `
-            <div class="card h-100">
+            <article class="card h-100" itemscope itemtype="https://schema.org/WebSite">
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title">${escapeHtml(item.name)}</h5>
-                    <p class="card-text flex-grow-1">${escapeHtml(item.description)}</p>
-                    <a href="${item.link}" target="_blank" class="btn btn-primary mt-auto">Lawati</a>
+                    <h3 class="card-title h5" itemprop="name">${escapeHtml(item.name)}</h3>
+                    <p class="card-text flex-grow-1" itemprop="description">${escapeHtml(item.description)}</p>
+                    <a href="${item.link}" 
+                       target="_blank" 
+                       rel="noopener"
+                       class="btn btn-primary mt-auto"
+                       itemprop="url">🌐 Lawati Platform</a>
                 </div>
-            </div>
+            </article>
         `;
         container.appendChild(card);
     });
@@ -850,7 +997,7 @@ function sharePost() {
     
     const postUrl = `${window.location.origin}${window.location.pathname}${window.location.hash}`;
     const postTitle = currentPost.title;
-    const postText = `Check out this post: ${postTitle}`;
+    const postText = currentPost.excerpt || currentPost.title;
     
     if (navigator.share) {
         // Native sharing API (mobile)
@@ -865,6 +1012,32 @@ function sharePost() {
         // Fallback for desktop
         copyPostLink();
     }
+}
+
+// Facebook sharing
+function sharePostOnFacebook() {
+    if (!currentPost) return;
+    const postUrl = `${window.location.origin}${window.location.pathname}${window.location.hash}`;
+    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(postUrl)}`;
+    window.open(facebookUrl, '_blank', 'width=600,height=400');
+}
+
+// Twitter sharing
+function sharePostOnTwitter() {
+    if (!currentPost) return;
+    const postUrl = `${window.location.origin}${window.location.pathname}${window.location.hash}`;
+    const postTitle = currentPost.title;
+    const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(postUrl)}&text=${encodeURIComponent(postTitle)}`;
+    window.open(twitterUrl, '_blank', 'width=600,height=400');
+}
+
+// WhatsApp sharing
+function sharePostOnWhatsApp() {
+    if (!currentPost) return;
+    const postUrl = `${window.location.origin}${window.location.pathname}${window.location.hash}`;
+    const postTitle = currentPost.title;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(postTitle + ' - ' + postUrl)}`;
+    window.open(whatsappUrl, '_blank');
 }
 
 // Copy post link to clipboard

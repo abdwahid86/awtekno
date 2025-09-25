@@ -21,8 +21,8 @@ async function loadHead() {
         title = 'Komuniti - awtekno.com';
         description = 'Rakan-rakan, blog, dan platform yang kami sokong - komuniti teknologi Malaysia.';
     } else if (currentPage === 'about.html') {
-        title = 'Siapa Saya - awtekno.com';
-        description = 'Pengenalan diri: Developer teknologi dengan tips dan affiliate.';
+        title = 'Hubungi - awtekno.com';
+        description = 'Hubungi awtekno.com untuk soalan teknikal, feedback blog, kerjasama business atau cadangan content.';
     }
 
     document.title = title;

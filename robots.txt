@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://awtekno.com/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Allow all CSS and JavaScript files for proper rendering
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Block any admin or sensitive areas if they exist
+Disallow: /admin/
+Disallow: /private/
+
+# Allow common files
+Allow: /robots.txt
+Allow: /sitemap.xml
+Allow: /favicon.ico

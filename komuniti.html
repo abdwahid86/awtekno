@@ -2,7 +2,10 @@
 <html lang="ms">
 <head>
     <meta charset="UTF-8">
-    <title>Komuniti - awtekno.com</title>
+    <title>Komuniti dan Blog Teknologi Malaysia - awtekno.com</title>
+    <meta name="description" content="Koleksi komuniti teknologi, blog, dan platform yang disokong. Sumber pembelajaran dan networking untuk developer dan tech enthusiast Malaysia.">
+    <meta name="keywords" content="komuniti teknologi malaysia, blog teknologi, platform developer, networking tech">
+    <link rel="canonical" href="https://awtekno.com/komuniti.html">
     <!-- Load head.html content directly -->
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
@@ -16,15 +19,15 @@
 
     <main class="container py-5">
         <!-- SEO H1 -->
-        <h1 class="visually-hidden">Komuniti dan Platform Teknologi Malaysia</h1>
+        <h1 class="visually-hidden">Komuniti dan Blog Teknologi Malaysia</h1>
         
         <div class="text-center mb-4">
-            <h2 class="display-5 fw-bold text-gradient">Komuniti</h2>
+            <h2 class="display-5 fw-bold text-gradient">Komuniti & Blog</h2>
         </div>
         
         <!-- Description -->
         <div class="alert alert-info mb-4" role="alert">
-            <strong>🤝 Koleksi blog, tools, dan platform yang saya sokong.
+            <strong>🤝 Koleksi komuniti, blog, tools, dan platform yang saya sokong.</strong>
         </div>
 
         <!-- Search Section -->
@@ -70,6 +73,7 @@
                 if (typeof loadAnalytics === 'function') loadAnalytics();
                 
                 await loadResources();
+                addKomunitiStructuredData();
                 
                 // Add Enter key support untuk search
                 const searchInput = document.getElementById('resource-search-input');
@@ -85,6 +89,39 @@
             } catch (error) {
                 console.error('Error initializing komuniti page:', error);
             }
+        }
+        
+        // Add structured data for SEO
+        function addKomunitiStructuredData() {
+            const structuredData = {
+                "@context": "https://schema.org",
+                "@type": "CollectionPage",
+                "name": "Komuniti dan Blog Teknologi Malaysia",
+                "description": "Koleksi komuniti teknologi, blog, dan platform yang disokong. Sumber pembelajaran dan networking untuk developer dan tech enthusiast Malaysia.",
+                "url": window.location.href,
+                "mainEntity": {
+                    "@type": "ItemList",
+                    "name": "Komuniti dan Platform Teknologi",
+                    "numberOfItems": allResourceItems?.length || 0,
+                    "itemListElement": (allResourceItems || []).slice(0, 5).map((item, index) => ({
+                        "@type": "WebSite",
+                        "position": index + 1,
+                        "name": item.name,
+                        "description": item.description,
+                        "url": item.link
+                    }))
+                },
+                "author": {
+                    "@type": "Organization",
+                    "name": "awtekno.com",
+                    "url": "https://awtekno.com"
+                }
+            };
+            
+            const script = document.createElement('script');
+            script.type = 'application/ld+json';
+            script.textContent = JSON.stringify(structuredData);
+            document.head.appendChild(script);
         }
         
         if (document.readyState === 'loading') {

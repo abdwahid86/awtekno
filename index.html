@@ -85,6 +85,9 @@
             try {
                 console.log('Starting initialization...');
                 
+                // Store original meta tags for SEO restoration
+                storeOriginalMetaTags();
+                
                 await loadPartials();
                 
                 if (typeof loadHead === 'function') loadHead();
